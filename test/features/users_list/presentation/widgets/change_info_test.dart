@@ -12,14 +12,19 @@ class OnSaveMock extends Mock {
 }
 
 void main() {
-  final onSave = OnSaveMock();
+  late OnSaveMock onSave;
 
-  final user = User(
-    name: 'Eric Onyeulo',
-    email: 'test@gmail.com',
-    gender: Gender.male,
-    createdAt: DateTime.now(),
-  );
+  late User user;
+
+  setUp(() {
+    onSave = OnSaveMock();
+    user = User(
+      name: 'Eric Onyeulo',
+      email: 'test@gmail.com',
+      gender: Gender.male,
+      createdAt: DateTime.now(),
+    );
+  });
 
   Widget buildWidget(Widget widget) {
     return MaterialApp(
@@ -36,6 +41,7 @@ void main() {
           buildWidget(ChangeUserInfoDialog(initialValue: user.name)),
         );
         expect(find.text(user.name), findsOneWidget);
+        expect(find.byKey(const ValueKey('save')), findsOneWidget);
       },
     );
     testWidgets(

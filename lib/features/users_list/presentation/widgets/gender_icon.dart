@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/gender.dart';
 
 class GenderIcon extends StatelessWidget {
-  const GenderIcon({required this.gender});
+  const GenderIcon({super.key, required this.gender});
 
   final Gender gender;
 

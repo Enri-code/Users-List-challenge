@@ -52,7 +52,7 @@ class _UsersScreenState extends State<UsersScreen> {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(left: 4),
-            child: Text(section.type.title),
+            child: Text(section.status.title),
           ),
         ),
         const SizedBox(height: 8),

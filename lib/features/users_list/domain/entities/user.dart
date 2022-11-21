@@ -1,9 +1,10 @@
 import 'package:owwn_flutter_test/features/users_list/domain/entities/gender.dart';
+import 'package:owwn_flutter_test/features/users_list/domain/entities/status.dart';
 
 class User {
   final String id;
   final String partnerId;
-  final String status;
+  final Status status;
   final DateTime createdAt;
   final String name;
   final String email;
@@ -14,7 +15,7 @@ class User {
     required this.name,
     required this.gender,
     required this.createdAt,
-    this.status = 'active',
+    this.status = Status.active,
     this.id = '',
     this.partnerId = '',
     this.email = '',

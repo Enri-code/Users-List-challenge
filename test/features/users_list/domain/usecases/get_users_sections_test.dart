@@ -4,7 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/gender.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/section.dart';
-import 'package:owwn_flutter_test/features/users_list/domain/entities/section_type.dart';
+import 'package:owwn_flutter_test/features/users_list/domain/entities/status.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/user.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/repos/users_repo.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/usecases/get_users_sections.dart';
@@ -23,7 +23,7 @@ void main() {
 
   final response = [
     UsersSection(
-      type: SectionType.active,
+      status: Status.active,
       users: [
         User(
           name: 'User Name',

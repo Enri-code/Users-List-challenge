@@ -1,18 +1,16 @@
-// ignore_for_file: unrelated_type_equality_checks
-
 import 'package:dartz/dartz.dart';
 import 'package:owwn_flutter_test/core/utils/api_client.dart';
 import 'package:owwn_flutter_test/core/utils/app_error.dart';
-import 'package:owwn_flutter_test/features/users_list/data/models/user.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/section.dart';
-import 'package:owwn_flutter_test/features/users_list/domain/entities/section_type.dart';
+import 'package:owwn_flutter_test/features/users_list/domain/entities/status.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/user.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/repos/users_repo.dart';
 
 class UsersRepoImpl extends IUsersRepo {
-  UsersRepoImpl(this._client);
+  UsersRepoImpl(this._client, {required this.converter});
 
   final ApiClient _client;
+  final User Function(Map<String, dynamic> map) converter;
 
   @override
   AsyncErrorOr<List<UsersSection>> getUsers([String page = '1']) async {
@@ -30,24 +28,23 @@ class UsersRepoImpl extends IUsersRepo {
               (response.data['users'] as List).cast<Map<String, dynamic>>();
 
           //Converts usersMap List to List of UserModel
-          final Iterable<User> users =
-              usersMap.map((e) => UserModel.fromMap(e));
+          final Iterable<User> users = usersMap.map(converter);
 
           //Gets users wuth active status from the List and stores
           final activeUsers =
-              users.where((e) => SectionType.active == e.status).toList();
+              users.where((e) => Status.active == e.status).toList();
 
           //Gets users wuth inactive status from the List and stores
           final inactiveUsers =
-              users.where((e) => SectionType.inactive == e.status).toList();
+              users.where((e) => Status.inactive == e.status).toList();
 
           return Right(
             //Only returns active/inactive users if they are not empty
             [
               if (activeUsers.isNotEmpty)
-                UsersSection(type: SectionType.active, users: activeUsers),
+                UsersSection(status: Status.active, users: activeUsers),
               if (inactiveUsers.isNotEmpty)
-                UsersSection(type: SectionType.inactive, users: inactiveUsers),
+                UsersSection(status: Status.inactive, users: inactiveUsers),
             ],
           );
 

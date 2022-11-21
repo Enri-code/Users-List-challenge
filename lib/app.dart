@@ -8,6 +8,7 @@ import 'package:owwn_flutter_test/core/utils/api_client.dart';
 import 'package:owwn_flutter_test/features/auth/data/auth_repo.dart';
 import 'package:owwn_flutter_test/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:owwn_flutter_test/features/auth/presentation/screens/login_screen.dart';
+import 'package:owwn_flutter_test/features/users_list/data/models/user.dart';
 import 'package:owwn_flutter_test/features/users_list/data/repos/users_repo.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/bloc/users_bloc.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/screens/users_screen.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => UsersBloc(
-              UsersRepoImpl(context.read<ApiClient>()),
+              UsersRepoImpl(
+                context.read<ApiClient>(),
+                converter: UserModel.fromMap,
+              ),
             ),
           ),
         ],
