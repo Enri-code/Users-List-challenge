@@ -21,13 +21,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       //Callback when error is returned, [Left] side of Either
       (l) {
-        emit(
-          state.copyWith(
-            isSignedIn: false,
-            status: EventStatus.error,
-            error: l,
-          ),
-        );
+        emit(state.copyWith(
+          isSignedIn: false,
+          status: EventStatus.error,
+          error: l,
+        ));
       },
       //Callback when success is returned, [Right] side of Either
       (r) {

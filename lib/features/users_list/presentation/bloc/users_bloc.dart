@@ -12,7 +12,6 @@ part 'users_state.dart';
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UsersBloc(this._repo) : super(const UsersState()) {
     on<GetUsers>(_getUsers);
-    // on<ResetUpdateduser>(_resetUser);
     on<UpdateUserData>(_updateUser);
   }
 
@@ -20,13 +19,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   int page = 1;
 
-/*   void _resetUser(ResetUpdateduser event, Emitter<UsersState> emit) {
-    emit(state.copyWith());
-  } */
-
   void _updateUser(UpdateUserData event, Emitter<UsersState> emit) {
-    //Attempts to find the user's location in the Sections' Users' Lists
     int userIndex = -1;
+
+    //Attempts to find the user's location in the Sections' Users' Lists
     final sectionId = state.sections.indexWhere(
       (e) => (userIndex = e.users.indexOf(event.user)) > -1,
     );
@@ -47,7 +43,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   Future _getUsers(GetUsers event, Emitter<UsersState> emit) async {
     emit(state.copyWith(status: EventStatus.loading));
+
     final result = await GetUsersCase(_repo, page.toString()).call();
+
     result.fold(
       //Callback when error is returned, [Left] side of Either
       (l) => emit(state.copyWith(status: EventStatus.error)),
@@ -55,12 +53,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       //Callback when success is returned, [Right] side of Either
       (r) {
         page++;
-        emit(
-          state.copyWith(
-            status: EventStatus.success,
-            sections: [...state.sections, ...r],
-          ),
-        );
+        emit(state.copyWith(
+          status: EventStatus.success,
+          sections: [...state.sections, ...r],
+        ));
       },
     );
   }

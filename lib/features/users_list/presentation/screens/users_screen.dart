@@ -90,33 +90,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   'Users',
                   style: TextStyle(fontSize: 22, color: Colors.white),
                 ),
-                flexibleSpace: Stack(
-                  fit: StackFit.expand,
-                  clipBehavior: Clip.none,
-                  children: [
-                    Image.asset(
-                      'assets/images/users_list_bg.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 120,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: FractionalOffset.topCenter,
-                            end: FractionalOffset.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black,
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    _BgOverlay(scrollController: _scrollController),
-                  ],
-                ),
+                flexibleSpace: _ImageBG(scrollController: _scrollController),
               ),
               ...state.sections.map((e) {
                 return SliverPadding(
@@ -137,6 +111,39 @@ class _UsersScreenState extends State<UsersScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+class _ImageBG extends StatelessWidget {
+  const _ImageBG({
+    required ScrollController scrollController,
+  }) : _scrollController = scrollController;
+
+  final ScrollController _scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.none,
+      children: [
+        Image.asset('assets/images/users_list_bg.png', fit: BoxFit.cover),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 120,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [Colors.transparent, Colors.black],
+              ),
+            ),
+          ),
+        ),
+        _BgOverlay(scrollController: _scrollController),
+      ],
     );
   }
 }

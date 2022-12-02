@@ -13,7 +13,7 @@ class AuthRepoImpl extends IAuthRepo {
   @override
   AsyncErrorOr<void> signIn(String email) async {
     try {
-      final response = await _client.post<Map>(
+      final response = await _client.post<Map<String, dynamic>>(
         'auth',
         body: jsonEncode({'email': email}),
       );
