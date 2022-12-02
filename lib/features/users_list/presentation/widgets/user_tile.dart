@@ -30,7 +30,7 @@ class UserTile extends StatelessWidget {
               return const BorderRadius.vertical(bottom: Radius.circular(12));
             case TilePosition.top:
               return const BorderRadius.vertical(top: Radius.circular(12));
-            default:
+            case TilePosition.between:
               return null;
           }
         }(),

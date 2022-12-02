@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:owwn_flutter_test/app/theme/colors.dart';
 
 class WidgetsThemeInfo {
+  final TextButtonThemeData textButtonTheme;
+  final OutlinedButtonThemeData outlinedButtonTheme;
+
   WidgetsThemeInfo({required Color primaryColor})
       : textButtonTheme = TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: primaryColor),
@@ -16,9 +19,6 @@ class WidgetsThemeInfo {
             ),
           ),
         );
-
-  final TextButtonThemeData textButtonTheme;
-  final OutlinedButtonThemeData outlinedButtonTheme;
 
   final elevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
