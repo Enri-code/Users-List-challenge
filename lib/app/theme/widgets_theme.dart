@@ -37,7 +37,7 @@ class WidgetsThemeInfo {
     errorStyle:
         const TextStyle(fontSize: 14, color: Color.fromARGB(255, 241, 0, 0)),
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
+      borderRadius: BorderRadius.all(Radius.circular(24)),
     ),
     enabledBorder: const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),

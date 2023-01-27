@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
               title: AppConfig.appName,
               routes: AppConfig.appRoutes,
               initialRoute: LoginScreen.routeName,
+              color: ColorPalette.primaryColor,
               darkTheme: DarkThemeProvider(ColorPalette.primaryColor).theme,
               themeMode: ThemeMode.dark,
             ),
