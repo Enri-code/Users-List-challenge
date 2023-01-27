@@ -17,7 +17,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   final IUsersRepo _repo;
 
-  int page = 1;
+  ///Pagination index
+  int _page = 1;
 
   void _updateUser(UpdateUserData event, Emitter<UsersState> emit) {
     int userIndex = -1;
@@ -27,12 +28,13 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       (e) => (userIndex = e.users.indexOf(event.user)) > -1,
     );
 
+    //Exit function if not found
     if (userIndex < 0 || sectionId < 0) return;
 
     //Returns new user with data updated
     final user = event.user.copyWith(name: event.name, email: event.email);
 
-    final newSections = [...state.sections];
+    final newSections = List<UsersSection>.from(state.sections);
 
     //Replaces the old user instance with the updated one
     newSections[sectionId].users[userIndex] = user;
@@ -44,7 +46,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   Future _getUsers(GetUsers event, Emitter<UsersState> emit) async {
     emit(state.copyWith(status: EventStatus.loading));
 
-    final result = await GetUsersCase(_repo, page.toString()).call();
+    final result = await GetUsersCase(_repo, _page.toString()).call();
 
     result.fold(
       //Callback when error is returned, [Left] side of Either
@@ -52,7 +54,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
       //Callback when success is returned, [Right] side of Either
       (r) {
-        page++;
+        _page++;
         emit(state.copyWith(
           status: EventStatus.success,
           sections: [...state.sections, ...r],
