@@ -44,7 +44,7 @@ class MockIUsersRepo extends _i1.Mock implements _i3.IUsersRepo {
 
   @override
   _i4.Future<_i2.Either<_i5.AppError, List<_i6.UsersSection>>> getUsers(
-          [String? page]) =>
+          [int? page]) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUsers,

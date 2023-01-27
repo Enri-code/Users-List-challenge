@@ -135,11 +135,7 @@ class _UserFieldsWidget extends StatelessWidget {
               ),
             );
           },
-          child: BlocBuilder<UsersBloc, UsersState>(
-            builder: (context, state) {
-              return Text(userData.name, style: const TextStyle(fontSize: 28));
-            },
-          ),
+          child: Text(userData.name, style: const TextStyle(fontSize: 28)),
         ),
         const SizedBox(height: 12),
         GestureDetector(
@@ -152,13 +148,10 @@ class _UserFieldsWidget extends StatelessWidget {
               ),
             );
           },
-          child: BlocBuilder<UsersBloc, UsersState>(
-            builder: (context, state) {
-              return Text(
-                userData.email.isEmpty ? 'No email address' : userData.email,
-                style: TextStyle(color: Colors.grey[400], fontSize: 16),
-              );
-            },
+          child: Text(
+            userData.email.isEmpty ? 'No email address' : userData.email,
+            style: TextStyle(color: Colors.grey[400], fontSize: 16),
+            textAlign: TextAlign.center,
           ),
         ),
       ],

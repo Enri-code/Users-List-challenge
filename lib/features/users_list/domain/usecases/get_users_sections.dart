@@ -4,9 +4,9 @@ import 'package:owwn_flutter_test/features/users_list/domain/entities/section.da
 import 'package:owwn_flutter_test/features/users_list/domain/repos/users_repo.dart';
 
 class GetUsersCase extends UseCase<List<UsersSection>> {
-  const GetUsersCase(this._repo, [this.page = '1']);
+  const GetUsersCase(this._repo, [this.page = 1]);
 
-  final String page;
+  final int page;
   final IUsersRepo _repo;
 
   @override

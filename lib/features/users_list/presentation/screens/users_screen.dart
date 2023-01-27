@@ -54,7 +54,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Iterable<Widget> _sectionBuilder(UsersSection section) {
     return [
       SliverPadding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.only(bottom: 8),
         sliver: SliverToBoxAdapter(
           child: Align(
             alignment: Alignment.centerLeft,
@@ -77,6 +77,7 @@ class _UsersScreenState extends State<UsersScreen> {
           ),
         ),
       ),
+      const SliverPadding(padding: EdgeInsets.only(top: 8))
     ];
   }
 
@@ -103,7 +104,6 @@ class _UsersScreenState extends State<UsersScreen> {
                 flexibleSpace: _ImageBG(scrollController: _scrollController),
               ),
               ..._foldSubSection(state.sections.map(_sectionBuilder)),
-
               if (state.status == EventStatus.loading)
                 const SliverPadding(
                   padding: EdgeInsets.all(24),

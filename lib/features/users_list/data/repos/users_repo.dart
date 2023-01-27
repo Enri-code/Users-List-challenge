@@ -13,7 +13,7 @@ class UsersRepoImpl extends IUsersRepo {
   final User Function(Map<String, dynamic> map) converter;
 
   @override
-  AsyncErrorOr<List<UsersSection>> getUsers([String page = '1']) async {
+  AsyncErrorOr<List<UsersSection>> getUsers([int page = 1]) async {
     try {
       //Sends request for users and stores response
       final response = await _client.get<Map>(
@@ -42,9 +42,15 @@ class UsersRepoImpl extends IUsersRepo {
             //Only returns active/inactive users if they are not empty
             [
               if (activeUsers.isNotEmpty)
-                UsersSection(status: Status.active, users: activeUsers),
+                UsersSection(
+                  status: Status.active,
+                  users: activeUsers,
+                ),
               if (inactiveUsers.isNotEmpty)
-                UsersSection(status: Status.inactive, users: inactiveUsers),
+                UsersSection(
+                  status: Status.inactive,
+                  users: inactiveUsers,
+                ),
             ],
           );
 

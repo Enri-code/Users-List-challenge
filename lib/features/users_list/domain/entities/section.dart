@@ -5,5 +5,15 @@ class UsersSection {
   final Status status;
   final List<User> users;
 
-  const UsersSection({required this.status, required this.users});
+  const UsersSection({
+    required this.status,
+    required this.users,
+  });
+
+  UsersSection copyWith({Status? status, List<User>? users}) {
+    return UsersSection(
+      status: status ?? this.status,
+      users: users ?? this.users,
+    );
+  }
 }

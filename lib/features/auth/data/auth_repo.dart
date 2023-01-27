@@ -22,7 +22,7 @@ class AuthRepoImpl extends IAuthRepo {
         case 200:
           //Stores the access_token to be used in api requests.
           _client.token = response.data['access_token'] as String;
-
+          
           return const Right(null);
 
         default:

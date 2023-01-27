@@ -36,8 +36,11 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
     final newSections = List<UsersSection>.from(state.sections);
 
-    //Replaces the old user instance with the updated one
-    newSections[sectionId].users[userIndex] = user;
+    final updatedSection = newSections[sectionId].copyWith(
+      users: List.from(newSections[sectionId].users),
+    );
+
+    newSections[sectionId] = updatedSection..users[userIndex] = user;
 
     //Emits a new state with the updated user for the bloc to rebuild
     emit(state.copyWith(sections: newSections));
@@ -46,7 +49,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   Future _getUsers(GetUsers event, Emitter<UsersState> emit) async {
     emit(state.copyWith(status: EventStatus.loading));
 
-    final result = await GetUsersCase(_repo, _page.toString()).call();
+    final result = await GetUsersCase(_repo, _page).call();
 
     result.fold(
       //Callback when error is returned, [Left] side of Either

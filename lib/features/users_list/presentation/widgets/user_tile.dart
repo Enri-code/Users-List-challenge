@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owwn_flutter_test/app/theme/colors.dart';
 import 'package:owwn_flutter_test/features/users_list/domain/entities/user.dart';
-import 'package:owwn_flutter_test/features/users_list/presentation/bloc/users_bloc.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/screens/user_profile.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/widgets/user_avatar.dart';
 
@@ -57,23 +55,19 @@ class UserTile extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: BlocBuilder<UsersBloc, UsersState>(
-                    builder: (context, state) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(user.name, overflow: TextOverflow.ellipsis),
-                          Text(
-                            user.email,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(user.name, overflow: TextOverflow.ellipsis),
+                      Text(
+                        user.email,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
