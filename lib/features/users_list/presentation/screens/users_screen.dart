@@ -19,23 +19,24 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   void initState() {
-    final usersBloc = context.read<UsersBloc>();
+    context.read<UsersBloc>().add(GetUsers());
 
-    usersBloc.add(GetUsers());
+    _scrollController.addListener(_updateOnScroll);
 
-    _scrollController.addListener(() {
-      if (usersBloc.state.sections.map((e) => e.users).length > 120) return;
-
-      if (usersBloc.state.status == EventStatus.loading ||
-          usersBloc.state.status == EventStatus.error) return;
-
-      if (_scrollController.position.maxScrollExtent -
-              _scrollController.offset <
-          100) {
-        usersBloc.add(GetUsers());
-      }
-    });
     super.initState();
+  }
+
+  void _updateOnScroll() {
+    if (context.read<UsersBloc>().state.sections.map((e) => e.users).length >
+        120) return;
+
+    if (context.read<UsersBloc>().state.status == EventStatus.loading ||
+        context.read<UsersBloc>().state.status == EventStatus.error) return;
+
+    if (_scrollController.position.maxScrollExtent - _scrollController.offset <
+        100) {
+      context.read<UsersBloc>().add(GetUsers());
+    }
   }
 
   @override
@@ -44,20 +45,27 @@ class _UsersScreenState extends State<UsersScreen> {
     super.dispose();
   }
 
-  Widget _sectionBuilder(UsersSection section) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Text(section.status.title),
+  Iterable<Widget> _foldSubSection(Iterable<Iterable> section) {
+    return section.fold([], (prev, curr) => [...prev, ...curr]);
+  }
+
+  Iterable<Widget> _sectionBuilder(UsersSection section) {
+    return [
+      SliverPadding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        sliver: SliverToBoxAdapter(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(section.status.title),
+            ),
           ),
         ),
-        const SizedBox(height: 8),
-        ...section.users.map(
-          (e) => UserTile(
+      ),
+      ...section.users.map(
+        (e) => SliverToBoxAdapter(
+          child: UserTile(
             user: e,
             position: () {
               if (e == section.users.first) return TilePosition.top;
@@ -66,8 +74,8 @@ class _UsersScreenState extends State<UsersScreen> {
             }(),
           ),
         ),
-      ],
-    );
+      ),
+    ];
   }
 
   @override
@@ -92,12 +100,7 @@ class _UsersScreenState extends State<UsersScreen> {
                 ),
                 flexibleSpace: _ImageBG(scrollController: _scrollController),
               ),
-              ...state.sections.map((e) {
-                return SliverPadding(
-                  padding: const EdgeInsets.all(16),
-                  sliver: SliverToBoxAdapter(child: _sectionBuilder(e)),
-                );
-              }),
+              ..._foldSubSection(state.sections.map(_sectionBuilder)),
               if (state.status == EventStatus.loading)
                 const SliverPadding(
                   padding: EdgeInsets.all(24),

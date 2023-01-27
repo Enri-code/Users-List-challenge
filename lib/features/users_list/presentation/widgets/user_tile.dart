@@ -21,6 +21,7 @@ class UserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
         color: ColorPalette.greys[500],
@@ -35,43 +36,48 @@ class UserTile extends StatelessWidget {
           }
         }(),
       ),
-      child: InkResponse(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            UserProfileScreen.routeName,
-            arguments: user,
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
-            children: [
-              Hero(
-                tag: 'name_avatar-${user.id}',
-                child: UserNameAvatar(user: user, size: 38, fontSize: 14),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: BlocBuilder<UsersBloc, UsersState>(
-                  builder: (context, state) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(user.name, overflow: TextOverflow.ellipsis),
-                        Text(
-                          user.email,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkResponse(
+          containedInkWell: true,
+          highlightShape: BoxShape.rectangle,
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              UserProfileScreen.routeName,
+              arguments: user,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Hero(
+                  tag: 'name_avatar-${user.id}',
+                  child: UserNameAvatar(user: user, size: 38, fontSize: 14),
                 ),
-              ),
-            ],
+                const SizedBox(width: 16),
+                Expanded(
+                  child: BlocBuilder<UsersBloc, UsersState>(
+                    builder: (context, state) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(user.name, overflow: TextOverflow.ellipsis),
+                          Text(
+                            user.email,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
