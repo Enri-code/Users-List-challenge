@@ -27,15 +27,17 @@ class _UsersScreenState extends State<UsersScreen> {
   }
 
   void _updateOnScroll() {
-    if (context.read<UsersBloc>().state.sections.map((e) => e.users).length >
-        120) return;
+    //[120] is the amount of users from data source.
+    //This was hard-coded to save time, but should not be done normally
+    final bloc = context.read<UsersBloc>();
+    if (bloc.state.sections.map((e) => e.users).length > 120) return;
 
-    if (context.read<UsersBloc>().state.status == EventStatus.loading ||
-        context.read<UsersBloc>().state.status == EventStatus.error) return;
+    if (bloc.state.status == EventStatus.loading ||
+        bloc.state.status == EventStatus.error) return;
 
     if (_scrollController.position.maxScrollExtent - _scrollController.offset <
         100) {
-      context.read<UsersBloc>().add(GetUsers());
+      bloc.add(GetUsers());
     }
   }
 
@@ -101,6 +103,7 @@ class _UsersScreenState extends State<UsersScreen> {
                 flexibleSpace: _ImageBG(scrollController: _scrollController),
               ),
               ..._foldSubSection(state.sections.map(_sectionBuilder)),
+
               if (state.status == EventStatus.loading)
                 const SliverPadding(
                   padding: EdgeInsets.all(24),
@@ -109,7 +112,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   ),
                 )
               else if (state.status == EventStatus.error)
-                const _ErrorWidget(),
+                const _ErrorSliver(),
             ],
           );
         },
@@ -178,8 +181,8 @@ class _BgOverlay extends StatelessWidget {
   }
 }
 
-class _ErrorWidget extends StatelessWidget {
-  const _ErrorWidget();
+class _ErrorSliver extends StatelessWidget {
+  const _ErrorSliver();
 
   @override
   Widget build(BuildContext context) {
