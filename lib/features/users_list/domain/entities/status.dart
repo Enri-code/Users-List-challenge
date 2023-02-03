@@ -2,12 +2,16 @@ class Status {
   const Status._(this._id);
 
   factory Status.fromValue(String value) {
-    if (value == active._id) return active;
-    return inactive;
+    return values.firstWhere(
+      (e) => value.toLowerCase() == e._id,
+      orElse: () => const Status._('unknown'),
+    );
   }
 
   static const active = Status._('active');
   static const inactive = Status._('inactive');
+
+  static const values = [active, inactive];
 
   final String _id;
 

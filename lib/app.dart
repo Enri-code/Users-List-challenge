@@ -18,7 +18,6 @@ import 'package:owwn_flutter_test/features/users_list/domain/repos/users_repo.da
 import 'package:owwn_flutter_test/features/users_list/domain/repos/users_service.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/bloc/users_bloc.dart';
 import 'package:owwn_flutter_test/features/users_list/presentation/screens/users_screen.dart';
-import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.value(
+    return RepositoryProvider.value(
       value: ApiClient(ServerConfig.apiBaseUrl),
       child: MultiRepositoryProvider(
         providers: [
